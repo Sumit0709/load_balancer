@@ -1,0 +1,3 @@
+backend_server/node_modules/
+client_simulator/node_modules/
+load_balancer/node_modules/

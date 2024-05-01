@@ -10,17 +10,13 @@ const send_request_to_backend_server = async (req, res) => {
 
     const backend_server_address = req.backend_server_address;
 
-    // to process start and end of request
+    // These load balancer objects are used to process the start and end of request. Some load balancer algo might want to perform certain activity when a request start and end (ex least connection algorithm)
     const lb_factory = new LoadBalancerFactory();
     const load_balancer_obj = lb_factory.createLoadBalancer(req.lb_type);
 
-    // to process requests for statistics purpose
+    // Request object is created to store requests related information for statistics purpose
     const request_obj = new Request(req.request_id, backend_server_address);
     request_list_obj.insert_new_request(request_obj);
-
-
-    // const backend_servers = new BS().getInstance();
-    // console.log(backend_server_address);
 
     try{
         request_obj.start_request();
@@ -28,26 +24,27 @@ const send_request_to_backend_server = async (req, res) => {
 
         const original_url_string = req.originalUrl;
         const parsedUrl = url.parse(original_url_string);
-        
-
         const url_path = parsedUrl.path;
-        request_obj.set_path(url_path);
-        // console.log("PATH = ", url_path);
 
+        // The path requested by user
+        request_obj.set_path(url_path);
+
+        // Sending request to the target backend server
         const response = await fetch(`${backend_server_address}${url_path}`, {
             method: req.method, 
             headers: req.headers
         });
 
-        const responseBody = await response.text();
-        // console.log(responseBody);
+        // extracting meaningful data from response and sending it back to the user
+        const response_body = await response.text();
+        const response_headers = response.headers;
+        const content_type = response_headers.get('content-type');
 
-        // console.log(response.status);
-        // res.json(responseBody);
         request_obj.end_request(response.status);
         load_balancer_obj.end_request(backend_server_address);
 
-        return res.send(responseBody);
+        await res.set('Content-Type', content_type);
+        return res.send(response_body);
 
     }
     catch(err){

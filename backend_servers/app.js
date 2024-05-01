@@ -2,20 +2,20 @@ const express = require("express");
 const cors = require('cors')
 const readlineSync = require('readline-sync');
 const routes = require('./routes/routes');
+const CONSTANTS = require("./CONSTANTS");
 
-// const envFileName = `.env.${process.env.NODE_ENV || "development"}`
-// require('dotenv').config({ path: envFileName })
+const BASE_PORT = CONSTANTS.BASE_PORT;
+let number_of_servers = CONSTANTS.number_of_servers;
 
-const BASE_PORT = 8000;
-let number_of_servers = 5;
-
-
+// To ask users, how many servers they want to start
 if(number_of_servers == null){
     number_of_servers = readlineSync.question("How many servers do you want to start? ");
 }
 
+// Array of app instances
 const app = new Array(number_of_servers);
 
+// starting multiple servers at different PORT
 for(let i=0; i<=number_of_servers; i++){
 
     const PORT = BASE_PORT + i;
@@ -30,6 +30,7 @@ for(let i=0; i<=number_of_servers; i++){
         next();
     });
     
+    // direct all requests to this route
     app[i].use('/*', routes)
 
     app[i].listen(PORT, (err)=>{

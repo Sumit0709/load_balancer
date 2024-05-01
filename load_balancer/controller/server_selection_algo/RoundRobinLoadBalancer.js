@@ -4,6 +4,9 @@ const LoadBalancer = require('./LoadBalancer');
 
 const all_backend_servers = backend_servers.get_all_server_list();
 
+/**
+ * Singleton implementation of RoundRobinLoadBalancer Class
+ */
 class RoundRobinLoadBalancer extends LoadBalancer{
     constructor(){
         super();
@@ -17,6 +20,7 @@ class RoundRobinLoadBalancer extends LoadBalancer{
 
         let count = all_backend_servers.length;
 
+        // making sure that the selected server is healthy
         while(count>0){
             const current_server_address = this.rr_servers.pop_push();
             if(available_servers.has(current_server_address)){

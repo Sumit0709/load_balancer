@@ -1,9 +1,12 @@
 const fetch = require('node-fetch')
 const backend_servers = require('./BackendServers')
 
-const update_healthy_servers = async () => {
+/*
+    updating list of healthy servers
+    This method is called periodically to perform this operation
 
-    // const backend_servers = new BS().getInstance();
+*/
+const update_healthy_servers = async () => {
 
     const all_servers = backend_servers.get_all_server_list();
 

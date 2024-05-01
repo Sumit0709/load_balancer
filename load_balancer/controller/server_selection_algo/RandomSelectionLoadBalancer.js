@@ -1,6 +1,9 @@
 const backend_servers = require('../../helper/BackendServers');
 const LoadBalancer = require('./LoadBalancer');
 
+/**
+ * Singleton implementation of RandomSelectionLoadBalancer Class
+ */
 class RandomSelectionLoadBalancer extends LoadBalancer{
     constructor(){
         super()

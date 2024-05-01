@@ -16,7 +16,7 @@ class Queue {
             this.push(value);
         }
     }
-
+    // Shift an element from front to back
     pop_push() {
         const popped_val = this.pop();
         this.push(popped_val);

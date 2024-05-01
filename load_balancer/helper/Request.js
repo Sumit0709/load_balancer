@@ -1,5 +1,7 @@
 
-
+/*
+    Class to store information related to incoming requests
+*/
 class Request{
     constructor(id, server_address=""){
         this.id = id,

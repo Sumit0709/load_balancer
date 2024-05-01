@@ -3,7 +3,10 @@ const path = require('path');
 
 const backend_servers = require('../../helper/BackendServers');
 const LoadBalancer = require('./LoadBalancer');
-
+const CONSTANTS = require('../../CONSTANTS');
+/**
+ * Singleton implementation of LeastConnectionLoadBalancer Class
+ */
 class LeastConnectionLoadBalancer extends LoadBalancer{
     constructor(){
         super();
@@ -16,25 +19,30 @@ class LeastConnectionLoadBalancer extends LoadBalancer{
 
 
     start_request(server_address){
-        
+        super.start_request(server_address);
+        // updating number of request being handled by a server
+        // adding request
         const new_request_count = this.lc_servers.get(server_address) + 1;
         this.lc_servers.set(server_address, new_request_count);
         
-        let data = '';
-        for (const [key, value] of this.lc_servers) {
-            data += `${value},`;
-        }
-        data += "\n";
+        // inserting number of requests being handled by each server into the log file
+        // let data = '';
+        // for (const [key, value] of this.lc_servers) {
+        //     data += `${value},`;
+        // }
+        // data += "\n";
 
-        const logFilePath = path.join(__dirname+'../../../stats/', 'least_connection.log');
-        fs.appendFile(logFilePath, data, (err) => {
-            if (err) {
-                console.error('Error writing to log file:', err);
-            }
-        });
+        // const logFilePath = path.join(__dirname+'../../../stats/', 'least_connection.log');
+        // fs.appendFile(logFilePath, data, (err) => {
+        //     if (err) {
+        //         console.error('Error writing to log file:', err);
+        //     }
+        // });
     }
 
     end_request(server_address){
+        // updating number of request being handled by a server
+        // removing request
         const new_request_count = this.lc_servers.get(server_address) - 1;
         this.lc_servers.set(server_address, new_request_count);
     }
@@ -50,7 +58,7 @@ class LeastConnectionLoadBalancer extends LoadBalancer{
     periodic_internal_health_check(){
         setInterval(async () => {
             this.update_healthy_servers_list();
-        }, 10000); // called every 10 sec
+        }, CONSTANTS.internal_health_check_interval_for_least_connection_algo); // called every 10 sec
     
     }
 
@@ -58,6 +66,7 @@ class LeastConnectionLoadBalancer extends LoadBalancer{
         this.healthy_servers = backend_servers.get_healthy_server_list();
         let valid_lc_servers = this.lc_servers;
 
+        // removing unhealthy servers
         for (const [key, value] of this.lc_servers) {
             if(!this.healthy_servers.has(key)){
                 valid_lc_servers.delete(key);
@@ -65,6 +74,7 @@ class LeastConnectionLoadBalancer extends LoadBalancer{
         }
         this.lc_servers = valid_lc_servers;
 
+        // adding healthy servers
         for(const server_address of this.healthy_servers){
             if(!this.lc_servers.has(server_address)){
                 this.lc_servers.set(server_address,0);

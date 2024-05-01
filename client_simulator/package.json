@@ -1,0 +1,16 @@
+{
+  "name": "client_simulator",
+  "version": "1.0.0",
+  "description": "To send multiple requests and behave as multiple clients",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Sumit Ranjan Choudhary",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.7.0",
+    "nodemon": "^3.1.0"
+  }
+}

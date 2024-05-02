@@ -28,54 +28,54 @@ The load balancer distributes incoming requests across multiple server instances
 
 ### Random Selection Algorithm
 - Number of requests handled by each server 
-    Server 1: 8576      ->      17.14%   
-    Server 2: 10308     ->      20.61%
-    Server 3: 10047     ->      20.1%
-    Server 4: 10739     ->      21.5%
-    Server 5: 10322     ->      20.64%
+    *   Server 1: 8576      ->      17.14%   
+    *   Server 2: 10308     ->      20.61%
+    *   Server 3: 10047     ->      20.1%
+    *   Server 4: 10739     ->      21.5%
+    *   Server 5: 10322     ->      20.64%
 
 - Server processing time
-    Server 1: 52293973  ->      Average = 6097.7 ms
-    Server 2: 52651024  ->      Average = 5107.8 ms
-    Server 3: 55258060  ->      Average = 5499.9 ms
-    Server 4: 51279501  ->      Average = 4775.1 ms
-    Server 5: 44041313  ->      Average = 4266.7 ms
+    *   Server 1: 52293973  ->      Average = 6097.7 ms
+    *   Server 2: 52651024  ->      Average = 5107.8 ms
+    *   Server 3: 55258060  ->      Average = 5499.9 ms
+    *   Server 4: 51279501  ->      Average = 4775.1 ms
+    *   Server 5: 44041313  ->      Average = 4266.7 ms
 
 Number of connections lost  -> 8
 Average Response time       -> 5148 ms
 
 ### Round Robin Algorithm
 - Number of requests handled by each server 
-    Server 1: 10136     ->      20.27%
-    Server 2: 10136     ->      20.27%
-    Server 3: 10136     ->      20.27%
-    Server 4: 10048     ->      20.09%
-    Server 5: 9540      ->      19.08%
+    *   Server 1: 10136     ->      20.27%
+    *   Server 2: 10136     ->      20.27%
+    *   Server 3: 10136     ->      20.27%
+    *   Server 4: 10048     ->      20.09%
+    *   Server 5: 9540      ->      19.08%
 
 - Server processing time
-    Server 1: 51548742  
-    Server 2: 51658970  
-    Server 3: 51578948  
-    Server 4: 48444518  
-    Server 5: 51576662  
+    *   Server 1: 51548742  
+    *   Server 2: 51658970  
+    *   Server 3: 51578948  
+    *   Server 4: 48444518  
+    *   Server 5: 51576662  
 
 Number of connections lost  -> 4
 Average Response time       -> 5096 ms
 
 ### Least Connection Count Algorithm
 - Number of requests handled by each server 
-    Server 1: 10030     ->      20.06%     
-    Server 2: 9995      ->      19.99%
-    Server 3: 10055     ->      20.11% 
-    Server 4: 9787      ->      19.57%
-    Server 5: 10119     ->      20.24% 
+    *   Server 1: 10030     ->      20.06%     
+    *   Server 2: 9995      ->      19.99%
+    *   Server 3: 10055     ->      20.11% 
+    *   Server 4: 9787      ->      19.57%
+    *   Server 5: 10119     ->      20.24% 
 
 - Server processing time
-    Server 1: 51586362 ms
-    Server 2: 50984690 ms
-    Server 3: 51242037 ms
-    Server 4: 49673152 ms
-    Server 5: 51227276 ms
+    *   Server 1: 51586362 ms
+    *   Server 2: 50984690 ms
+    *   Server 3: 51242037 ms
+    *   Server 4: 49673152 ms
+    *   Server 5: 51227276 ms
 
 Number of connections lost  -> 14
 Average Response time       -> 5095 ms
